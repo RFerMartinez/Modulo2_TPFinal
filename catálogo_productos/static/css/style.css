@@ -1,0 +1,42 @@
+body {
+    background-image: url('../image/background_home.jpg');
+    background-size: cover; /* Ajusta la imagen para cubrir toda la página */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-attachment: fixed; /* Hace que la imagen se mantenga fija al hacer scroll */
+    /*background-blend-mode: overlay;  Mezcla la imagen con el color de fondo */
+    background-color: rgba(0, 0, 0, 0.5); /* Color de fondo con transparencia */
+    height: 10vh; /* Asegura que la altura del cuerpo sea siempre al menos del tamaño de la ventana */
+    margin: 0; /* Elimina márgenes para asegurar que el fondo cubra toda la ventana */
+    overflow: hidden; /* Evita el scroll horizontal si el fondo se sale de la pantalla */
+}
+
+.a-nav {
+    color: #000 !important; /* Color negro */
+    font-weight: bold; /* Texto en negrita */
+    padding: 10px 15px; /* Espaciado alrededor del texto */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    transition: all 0.3s ease; /* Transición suave para efectos hover */
+}
+.a-nav:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo blanco semitransparente al pasar el ratón */
+    border-radius: 5px; /* Bordes redondeados */
+    color: black !important; /* Cambio de color del texto al pasar el ratón */
+}
+  /* Estilo para el enlace activo */
+.a-nav.active {
+    background-color: rgba(255, 255, 255, 0.2) !important; /* Fondo blanco semitransparente */
+    color: #000 !important; /* Texto negro */
+}
+
+.txt-1 {
+    font-weight: 700;
+}
+.txt-2 {
+    font-weight: 500;
+}
+
+h1 {
+    color: red;
+}
