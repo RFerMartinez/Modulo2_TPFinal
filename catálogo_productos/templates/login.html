@@ -9,9 +9,9 @@
             </div>
             <div class="modal-body">
                 <!-- Formulario de Inicio de Sesión -->
-                {% if form.errors %}
+                {% if error_message %}
                     <div class="alert alert-danger" role="alert">
-                    Usuario y/o contraseña incorrecta
+                        {{ error_message }}
                     </div>
                 {% endif %}
                 <form method="post" action="{% url 'login' %}">
