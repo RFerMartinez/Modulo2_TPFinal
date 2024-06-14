@@ -1,15 +1,16 @@
 body {
     background-image: url('../image/background_home.jpg');
-    background-size: cover; /* Ajusta la imagen para cubrir toda la página */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    background-attachment: fixed; /* Hace que la imagen se mantenga fija al hacer scroll */
-    /*background-blend-mode: overlay;  Mezcla la imagen con el color de fondo */
-    background-color: rgba(0, 0, 0, 0.5); /* Color de fondo con transparencia */
-    height: 10vh; /* Asegura que la altura del cuerpo sea siempre al menos del tamaño de la ventana */
-    margin: 0; /* Elimina márgenes para asegurar que el fondo cubra toda la ventana */
-    overflow: hidden; /* Evita el scroll horizontal si el fondo se sale de la pantalla */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    min-height: 100vh; /* Asegura que el body tenga al menos la altura de la ventana del navegador */
+    margin: 0;
+    overflow-y: auto; /* Permite desplazamiento vertical */
+    overflow-x: hidden; /* Evita el desplazamiento horizontal */
 }
+
 
 .a-nav {
     color: #000 !important; /* Color negro */

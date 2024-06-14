@@ -17,6 +17,6 @@ urlpatterns = [
     # --LOGIN--
     # path('login/', )
 
-    path("productos", include('apps.productos.urls')),
+    path("productos/", include('apps.productos.urls')),
 ]
 
