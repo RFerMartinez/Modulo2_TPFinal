@@ -11,7 +11,7 @@ from .forms import ProductoForm
 class ListarProductos(ListView):
     template_name = "productos/productos.html"
     model = Producto
-    paginate_by = 3
+    paginate_by = 10
     context_object_name = "productos"
 
     def get_context_data(self, **kwargs):
@@ -30,7 +30,7 @@ class CrearProducto(LoginRequiredMixin, CreateView):
     form_class = ProductoForm
     success_url = reverse_lazy('productos:listar')
 
-def agregar_favorito(request, producto_id):
+def toggle_favorito(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
     if request.method == 'POST' and request.user.is_authenticated:
         # Intentar obtener un objeto Favorito existente

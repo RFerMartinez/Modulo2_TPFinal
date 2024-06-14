@@ -69,11 +69,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('.agregar_favorito').click(function (e) {
+        $('.toggle-favorito').click(function (e) {
             e.preventDefault();
             var $el = $(this);
             var producto_id = $el.data('producto-id');
-            var url = '{% url "productos:agregar_favorito" 0 %}'.replace('0', producto_id);
+            var url = '{% url "productos:toggle-favorito" 0 %}'.replace('0', producto_id);
 
             $.ajax({
                 type: 'POST',
