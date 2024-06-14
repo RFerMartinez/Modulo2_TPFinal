@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+
+{% block contenido %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">LISTA DE FAVORITOS</h1>
+</div>
+
+<div class="row">
+    <div class="col">
+
+        <a href="#" class="btn btn-primary disabled">Nueva Materia</a>
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Categorias</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for p in productos %}
+                    <tr>
+                        <th scope="row">{{p.nombre}}</th>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-primary btn-sm disabled">editar</a>
+                            </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+        {% include 'base/paginacion.html' %}
+
+    </div>
+</div>
+
+{% endblock contenido %}
