@@ -28,7 +28,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.usuarios',
+    'apps.productos',
 ]
+
+AUTH_USER_MODEL = 'usuarios.Usuario'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,8 +70,12 @@ WSGI_APPLICATION = 'catálogo_productos.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ECOM_modulo2',
+        'USER': 'postgres',
+        'PASSWORD': 'FerBD42276',
+        'HOST': 'localhost',
+        'PORT': 5432,
     }
 }
 

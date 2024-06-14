@@ -15,8 +15,8 @@
 
             <!--BARRA NAVEGACIón-->
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-secondary a-nav">INICIO</a></li>
-                <li><a href="#" class="nav-link px-2 link-body-emphasis a-nav">PRODUCTOS</a></li>
+                <li><a href="{% url 'home' %}" class="nav-link px-2 link-secondary a-nav">INICIO</a></li>
+                <li><a href="{% url 'productos:listar' %}" class="nav-link px-2 link-body-emphasis a-nav">PRODUCTOS</a></li>
             </ul>
 
             <!--TEXTBOX DE BÚSQUEDA-->
@@ -25,9 +25,13 @@
             </form>
 
             <div class="col-md-3 text-end">
-                {% if null %}
+                {% if not user.is_authenticated %}
                     <button type="button" class="btn btn-primary">Registrarse</button>
-                    <button type="button" class="btn btn-primary">Iniciar Sesion</button>
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalLoginForm">
+                        Iniciar Sesión
+                    </button>
+
                 {% else %}
                 <div class="dropdown text-end">
                     <!--IMÁGEN DE PERFIL-->
@@ -45,7 +49,7 @@
                         <li>
                             <hr class="dropdown-divider"> <!--LINA DE SEPARACIÓN-->
                         </li>
-                        <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesion</a></li>
                     </ul>
                 </div>
                 {% endif %}

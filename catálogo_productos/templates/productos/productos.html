@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% block contenido %}
+
+    <h1>PRODUCTOS</h1>
+    {% if user.is_authenticated %}
+        está autenticado
+    {% else %}
+        no está autenticado
+    {% endif %}
+
+    <!-- Ventana Modal para Iniciar Sesión -->
+    {% include 'login.html' %}
+
+{% endblock contenido %}
