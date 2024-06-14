@@ -6,14 +6,13 @@ from django.contrib.auth import views as views_django
 
 from . import views
 
-from .views import CustomLoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
-    # path('registrar/', )
+    path('registrar/', views.registrar, name='registrar'),
 
     # --LOGIN--
     # path('login/', )
