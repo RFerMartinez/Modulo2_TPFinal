@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+
+{% block contenido %}
+<div class="container">
+    <h2>¿Estás seguro de que deseas eliminar esta categoría?</h2>
+    <p><strong>{{ object.nombre }}</strong></p>
+
+    {% if productos_asociados %}
+        <p>Los siguientes productos están asociados a esta categoría:</p>
+        <ul>
+            {% for producto in productos_asociados %}
+                <li>{{ producto.nombre }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a href="{% url 'categorias:listar_categorias' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

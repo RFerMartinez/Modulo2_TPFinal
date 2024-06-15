@@ -2,7 +2,7 @@
 
 {% block contenido %}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">LISTA DE CATEGORIAS</h1>
+    <h1 class="h2">LISTA DE CATEGORIAS ({{categorias.count}} categorías)</h1>
     <div class="col-auto">
         <a class="btn btn-primary" href="{% url 'categorias:crear_categoria' %}">Crear nueva categoría</a>
     </div>
@@ -31,7 +31,8 @@
                             <td>{{c.productos.count}}</td>
                             <td>{{c.fecha_creacion}}</td>
                             <td>
-                                ELIMINAR
+                                <a href="{% url 'categorias:editar_categoria' c.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="{% url 'categorias:eliminar_categoria' c.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
                             </td>
                             <!-- <td>
                                 {% if u.es_admin %}

@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block contenido %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h1 class="text-center mb-4 custom-shadow">NUEVA CATEGORIA</h1>
+                
+                <form action="" method="post" class="custom-shadow ">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.nombre.id_for_label }}" class="form-label fw-bold">Nombre:</label><br>
+                        {{ form.nombre }}
+                        {% if form.nombre.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.nombre.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <button class="w-100 btn btn-primary btn-lg mt-3" type="submit">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .custom-shadow {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Ajusta el nivel de sombra según tu preferencia */
+            padding: 10px;
+            background-color: #f8f9fa; /* Color de fondo */
+            border-radius: 5px;
+        }
+    </style>
+{% endblock contenido %}
+
