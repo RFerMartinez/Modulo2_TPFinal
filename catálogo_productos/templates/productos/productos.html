@@ -5,7 +5,7 @@
     <div class="col">
         <h1>PRODUCTOS</h1>
     </div>
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and user.es_admin %}
     <div class="col-auto">
         <a class="btn btn-primary" href="{% url 'productos:crear_producto' %}">Crear nuevo producto</a>
         <a class="btn btn-primary" href="{% url 'categorias:crear_categoria' %}">Crear nueva categoría</a>
@@ -19,48 +19,60 @@
         <!-- Paginación anterior -->
         {% include 'base/paginacion.html' %}
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <!-- CARDS (Productos)-->
             {% for p in productos %}
-            <div class="col">
-                <div class="card shadow-sm position-relative fixed-height-card">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>{{ p.nombre }}</title>
-                        <rect width="100%" height="100%" fill="#55595c"></rect>
-                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ p.nombre }}</text>
-                    </svg>
-                    <div class="card-body">
-                        <p class="card-text text-truncate-3">{{ p.descripcion }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a class="btn btn-sm btn-outline-secondary" href="">Ver detalles</a>
-                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'productos:editar' p.pk %}">Editar</a>
-                            </div>
-                            <form action="{% url 'productos:eliminar' p.pk %}" method="post" class="d-inline">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Estás seguro de eliminar este producto?')">Eliminar - {{p.es_activo}}</button>
-                            </form>
-                            <span class="position-absolute top-0 end-0 p-3">
-                                {% if user.is_authenticated %}
-                                    {% if p.id in favoritos_ids %}
-                                        <a href="#" class="toggle-favorito text-danger" data-producto-id="{{ p.id }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                                                <path d="M8 1.314C7.403-.165 4.143-2.022 1.748 1.1-1.797 5.402 8 13.812 8 13.812s9.797-8.41 6.252-12.712C11.857-2.022 8.597-.165 8 1.314z"/>
-                                            </svg>
-                                        </a>
-                                    {% else %}
-                                        <a href="#" class="toggle-favorito text-white" data-producto-id="{{ p.id }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                                <path d="M8 2.748-.717-6.452A5.995 5.995 0 0 1 8-1c1.36 0 2.628.686 3.328 1.748C12.629 3.314 13 4.73 13 6.25c0 1.72-.6 2.995-1.71 4.34C10.024 11.542 8.68 12.74 8 13.944c-.68-1.204-2.025-2.402-3.29-3.354C3.6 9.245 3 7.97 3 6.25c0-1.52.37-2.936 1.378-4.502A3.964 3.964 0 0 1 8 2.748z"/>
-                                                <path d="M8 15C-7.333 4.868 3.279-3.04 7.824 1.143a1.717 1.717 0 0 1 .352.481.856.856 0 0 1 .352-.481C12.721-3.042 23.333 4.868 8 15z"/>
-                                            </svg>
-                                        </a>
+                {% if p.es_activo %}
+                    <div class="col">
+                        <div class="card shadow-sm position-relative fixed-height-card">
+                            <!--IMAGEN-->
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <title>{{ p.nombre }}</title>
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ p.nombre }}</text>
+                            </svg>
+                            
+                            <div class="card-body">
+                                <p class="card-text text-truncate-3">{{ p.descripcion }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm btn-outline-secondary" href="#">Ver detalles</a>
+                                        {% if user.is_authenticated and user.es_admin %}
+                                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'productos:editar' p.pk %}">Editar</a>
+                                        {% endif %}
+                                    </div>
+                                    {% if user.is_authenticated and user.es_admin %}
+                                        <form action="{% url 'productos:eliminar' p.pk %}" method="post" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Estás seguro de eliminar este producto?')">Eliminar</button>
+                                        </form>
                                     {% endif %}
-                                {% endif %}
-                            </span>
+                                    <!--ICONO DE FAVORITOS-->
+                                    <span class="position-absolute top-0 end-0 p-3">
+                                        {% if user.is_authenticated %}
+                                            {% if p.id in favoritos_ids %}
+                                                <a href="#" class="toggle-favorito text-danger" data-producto-id="{{ p.id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                        <path d="M8 1.314C7.403-.165 4.143-2.022 1.748 1.1-1.797 5.402 8 13.812 8 13.812s9.797-8.41 6.252-12.712C11.857-2.022 8.597-.165 8 1.314z"/>
+                                                    </svg>
+                                                </a>
+                                            {% else %}
+                                                <a href="#" class="toggle-favorito text-white" data-producto-id="{{ p.id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                                        <path d="M8 2.748-.717-6.452A5.995 5.995 0 0 1 8-1c1.36 0 2.628.686 3.328 1.748C12.629 3.314 13 4.73 13 6.25c0 1.72-.6 2.995-1.71 4.34C10.024 11.542 8.68 12.74 8 13.944c-.68-1.204-2.025-2.402-3.29-3.354C3.6 9.245 3 7.97 3 6.25c0-1.52.37-2.936 1.378-4.502A3.964 3.964 0 0 1 8 2.748z"/>
+                                                        <path d="M8 15C-7.333 4.868 3.279-3.04 7.824 1.143a1.717 1.717 0 0 1 .352.481.856.856 0 0 1 .352-.481C12.721-3.042 23.333 4.868 8 15z"/>
+                                                    </svg>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </span>
+                                    <!--FIN ICONO DE FAVORITOS-->
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                {% endif %}
             {% endfor %}
+            <!--Fin CARDS (productos)-->
         </div>
         
 

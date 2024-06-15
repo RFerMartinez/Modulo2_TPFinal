@@ -1,0 +1,62 @@
+{% extends 'base/base.html' %}
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+{% block contenido %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">LISTA DE PRODUCTOS - ADMIN </h1>
+    <div class="col-auto">
+        <a class="btn btn-primary" href="{% url 'productos:crear_producto_tolist' %}">Crear nuevo producto</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Descripción</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in productos %}
+                    <tr>
+                        <th scope="row"><p>{{ p.nombre }}</p></th>
+                        <td>{{ p.categoria.nombre }}</td> <!-- Suponiendo que 'categoria' tiene un campo 'nombre' -->
+                        <td>{{ p.descripcion }}</td>
+                        <td>
+                            <a href="{% url 'productos:editar_tolist' p.pk %}" class="btn btn-warning btn-sm">Editar</a>
+
+                            <form action="{% url 'productos:eliminar_tolist' p.pk %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este producto?')">Eliminar</button>
+                            </form>
+
+                            <div class="btn-group align-items-center justify-content-center">
+                                {% if p.es_activo %}
+                                    <p><i class="fas fa-check-circle" style="color: green;"></i> Visible</p>
+                                {% else %}
+                                    <p><i class="fas fa-times-circle color_x" style="color: red;"></i> Oculto</p>
+                                {% endif %}
+                            </div>
+                                
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">
+                            <h5>NO EXISTEN REGISTROS</h5>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% include 'base/paginacion.html' %}
+    </div>
+</div>
+{% endblock contenido %}
+
+
+

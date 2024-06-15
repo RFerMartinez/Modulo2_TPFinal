@@ -33,11 +33,23 @@ class CrearProducto(LoginRequiredMixin, CreateView):
     form_class = ProductoForm
     success_url = reverse_lazy('productos:listar')
 
+class CrearProductoTolist(LoginRequiredMixin, CreateView):
+    template_name = "productos/nuevoProducto.html"
+    model = Producto
+    form_class = ProductoForm
+    success_url = reverse_lazy('productos:listar_admin')
+
 class EditarProducto(UpdateView):
     template_name = "productos/editarProducto.html"
     model = Producto
     form_class = ProductoForm #Tiene el mismo modelo, ya que los campos que se usan para crear, también se usan para editar
     success_url = reverse_lazy('productos:listar')
+
+class EditarProductoTolist(UpdateView):
+    template_name = "productos/editarProducto.html"
+    model = Producto
+    form_class = ProductoForm #Tiene el mismo modelo, ya que los campos que se usan para crear, también se usan para editar
+    success_url = reverse_lazy('productos:listar_admin')
 
 def toggle_favorito(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
@@ -79,4 +91,19 @@ class EliminarProducto(View):
     def post(self, request, pk):
         producto = get_object_or_404(Producto, pk=pk)
         producto.delete()
-        return redirect('productos:listar')  # Redirecciona a la lista de productos después de eliminar
+        return redirect('productos:listar')
+
+class EliminarProductoTolist(View):
+    def post(self, request, pk):
+        producto = get_object_or_404(Producto, pk=pk)
+        producto.delete()
+        return redirect('productos:listar_admin')
+
+class ListarProductosAdmin(LoginRequiredMixin, ListView):
+    template_name = "productos/admin_listaProductos.html"
+    model = Producto
+    paginate_by = 15
+    context_object_name = "productos"
+
+    def get_queryset(self):
+        return Producto.objects.all().order_by('nombre')

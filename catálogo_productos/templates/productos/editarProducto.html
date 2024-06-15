@@ -57,6 +57,11 @@
                         {% endif %}
                     </div>
 
+                    <div class="mb-3 form-check">
+                        {{ form.es_activo }}
+                        <label class="form-check-label" for="{{ form.activo.id_for_label }}">Activo</label>
+                    </div>
+
                     <button class="w-100 btn btn-primary btn-lg mt-3" type="submit">Guardar</button>
                 </form>
             </div>
@@ -72,3 +77,4 @@
         }
     </style>
 {% endblock contenido %}
+
