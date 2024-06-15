@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 
 from .models import Producto, Favorito
 from .forms import ProductoForm
@@ -28,6 +28,12 @@ class CrearProducto(LoginRequiredMixin, CreateView):
     template_name = "productos/nuevoProducto.html"
     model = Producto
     form_class = ProductoForm
+    success_url = reverse_lazy('productos:listar')
+
+class EditarProducto(UpdateView):
+    template_name = "productos/editarProducto.html"
+    model = Producto
+    form_class = ProductoForm #Tiene el mismo modelo, ya que los campos que se usan para crear, también se usan para editar
     success_url = reverse_lazy('productos:listar')
 
 def toggle_favorito(request, producto_id):
@@ -65,3 +71,5 @@ class ListarFavoritos(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['es_favorito'] = True  # Ejemplo de cómo puedes agregar más datos al contexto
         return context
+
+

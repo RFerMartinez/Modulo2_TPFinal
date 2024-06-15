@@ -31,8 +31,8 @@
                         <p class="card-text">{{ p.descripcion }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Ver detalles</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
+                                <a class="btn btn-sm btn-outline-secondary" href="">Ver detalles</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'productos:editar' p.pk %}">Editar</a>
                             </div>
                             <span class="position-absolute top-0 end-0 p-3">
                                 {% if user.is_authenticated %}

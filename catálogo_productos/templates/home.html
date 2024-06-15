@@ -7,8 +7,8 @@
         <div class="col-lg-6 mx-auto">
             <p class="lead mb-4 txt-2">Bienvenido al catálogo de productos, en esta página puede visualiar los productos disponibles, como así también los detalles de los producto. Y en caso de querer guardarlos en 'Favoritos' para poder visualizarlos más tarde necesitará registrarce en la página.</p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" class="btn btn-primary btn-lg px-4 gap-3 txt-1">Ver productos</button>
-                <button type="button" class="btn btn-primary btn-lg px-4 gap-3 txt-1">Registrarse</button>
+                <a class="btn btn-primary btn-lg px-4 gap-3 txt-1" href="{% url 'productos:listar' %}">Ver productos</a>
+                <a class="btn btn-primary btn-lg px-4 gap-3 txt-1" href="{% url 'registrar' %}">Registrarse</a>
             </div>
         </div>
     </div>

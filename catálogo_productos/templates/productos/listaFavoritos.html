@@ -8,14 +8,12 @@
 <div class="row">
     <div class="col">
 
-        <a href="#" class="btn btn-primary disabled">Nueva Materia</a>
-
         <table class="table">
 
             <thead>
                 <tr>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Categorias</th>
+                    <th scope="col">Descripcion</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -25,11 +23,12 @@
                 {% for p in productos %}
                     <tr>
                         <th scope="row">{{p.nombre}}</th>
-                            <td>
-                                
+                            <td class="descripcion-columna">
+                                {{p.descripcion}}
                             </td>
                             <td>
-                                <a href="#" class="btn btn-primary btn-sm disabled">editar</a>
+                                <a href="#" class="btn btn-primary btn-sm disabled">Eliminar</a>
+                                <a href="#" class="btn btn-primary btn-sm disabled">Ver detalle</a>
                             </td>
                     </tr>
                 {% endfor %}
@@ -41,5 +40,15 @@
 
     </div>
 </div>
+
+<style>
+    .descripcion-columna {
+        /* Ajusta el ancho máximo como un porcentaje del ancho de la tabla */
+        max-width: 50vh; /* Ejemplo: 50% del ancho total de la tabla */
+        white-space: nowrap; /* Evita el salto de línea */
+        overflow: hidden; /* Oculta el contenido que desborda */
+        text-overflow: ellipsis; /* Muestra puntos suspensivos (...) */
+    }
+</style>
 
 {% endblock contenido %}

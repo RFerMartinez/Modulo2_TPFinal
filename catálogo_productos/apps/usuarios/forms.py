@@ -39,4 +39,11 @@ class FormularioRegistroUsuario(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(FormularioRegistroUsuario, self).__init__(*args, *kwargs)
+
         self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['username'].widget.attrs['placeholder'] = 'Nombre de usuario'
+        self.fields['first_name'].widget.attrs['placeholder'] = 'Nombre'
+        self.fields['last_name'].widget.attrs['placeholder'] = 'Apellido'
+        self.fields['email'].widget.attrs['placeholder'] = 'Correo electrónico'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Contraseña'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Repite la contraseña'

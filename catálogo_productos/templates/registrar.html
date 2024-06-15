@@ -6,7 +6,7 @@
         <div class="col-md-6">
             <h1 class="text-center mb-4 titulo-form">Registrarme</h1>
 
-            <form method="post" class="needs-validation" novalidate>
+            <form method="post" class="needs-validation p-4 shadow-lg rounded" novalidate style="background-color: #ffffff;">
                 {% csrf_token %}
 
                 {% if mensajeCorrecto %}
@@ -26,10 +26,10 @@
 
                 <!-- Campos del formulario -->
                 <div class="mb-3">
-                    <label for="{{ form.username.id_for_label }}" class="form-label">Nombre de usuario</label>
+                    <label for="{{ form.username.id_for_label }}" class="form-label">Nombre de usuario</label><br>
                     {{ form.username }}
                     {% if form.username.errors %}
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block">
                             {% for error in form.username.errors %}
                                 {{ error }}
                             {% endfor %}
@@ -38,10 +38,10 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="{{ form.first_name.id_for_label }}" class="form-label">Nombre</label>
+                    <label for="{{ form.first_name.id_for_label }}" class="form-label">Nombre</label><br>
                     {{ form.first_name }}
                     {% if form.first_name.errors %}
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block">
                             {% for error in form.first_name.errors %}
                                 {{ error }}
                             {% endfor %}
@@ -50,10 +50,10 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="{{ form.last_name.id_for_label }}" class="form-label">Apellido</label>
+                    <label for="{{ form.last_name.id_for_label }}" class="form-label">Apellido</label><br>
                     {{ form.last_name }}
                     {% if form.last_name.errors %}
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block">
                             {% for error in form.last_name.errors %}
                                 {{ error }}
                             {% endfor %}
@@ -65,7 +65,7 @@
                     <label for="{{ form.email.id_for_label }}" class="form-label">Correo electrónico</label>
                     {{ form.email }}
                     {% if form.email.errors %}
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block">
                             {% for error in form.email.errors %}
                                 {{ error }}
                             {% endfor %}
@@ -77,7 +77,7 @@
                     <label for="{{ form.password1.id_for_label }}" class="form-label">Contraseña</label>
                     {{ form.password1 }}
                     {% if form.password1.errors %}
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block">
                             {% for error in form.password1.errors %}
                                 {{ error }}
                             {% endfor %}
@@ -89,7 +89,7 @@
                     <label for="{{ form.password2.id_for_label }}" class="form-label">Confirmar contraseña</label>
                     {{ form.password2 }}
                     {% if form.password2.errors %}
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block">
                             {% for error in form.password2.errors %}
                                 {{ error }}
                             {% endfor %}
