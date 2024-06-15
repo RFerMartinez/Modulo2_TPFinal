@@ -8,7 +8,7 @@ class Producto(models.Model):
     descripcion = models.TextField()
     categoria = models.ForeignKey('Categoria', related_name='productos', on_delete=models.CASCADE)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
-    activo = models.BooleanField(default=True)
+    es_activo = models.BooleanField(default=True)
     # imagen = models.ImageField(upload_to='productos/', blank=True, null=True)
 
     def __str__(self):
@@ -28,7 +28,5 @@ class Favorito(models.Model):
 
     def __str__(self):
         return f'{self.usuario.username} - {self.producto.nombre}'
-
-
 
 

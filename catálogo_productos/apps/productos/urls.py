@@ -9,5 +9,6 @@ urlpatterns = [
     path('toggle-favorito/<int:producto_id>/', views.toggle_favorito, name='toggle-favorito'),
     path('lista-favoritos/', views.ListarFavoritos.as_view(), name='lista_favorito'),
     path('editar-producto/<int:pk>/', views.EditarProducto.as_view(), name='editar'),
+    path('eliminar/<int:pk>/', views.EliminarProducto.as_view(), name='eliminar'),
 ]
 

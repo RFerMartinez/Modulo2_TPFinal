@@ -5,7 +5,7 @@ class ProductoForm(forms.ModelForm):
     
     class Meta:
         model = Producto
-        fields = ['nombre', 'descripcion', 'categoria', 'precio', 'activo']
+        fields = ['nombre', 'descripcion', 'categoria', 'precio', 'es_activo']
 
         widgets = {
             'nombre': forms.TextInput(attrs={
@@ -25,14 +25,14 @@ class ProductoForm(forms.ModelForm):
                 'placeholder': 'Ingrese el precio del producto'
                 }),
             'activo': forms.CheckboxInput(attrs={
-                'class': 'form-check-input'
-                }),
+                'class': 'form-check-input',
+                'checked': True  # Asegura que el checkbox esté marcado por defecto
+            }),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['categoria'].empty_label = "Seleccione una categoría"
-        self.fields['activo'].label = "Activo"
 
     def clean_precio(self):
         precio = self.cleaned_data.get('precio')

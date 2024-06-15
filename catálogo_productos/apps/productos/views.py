@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -23,6 +23,9 @@ class ListarProductos(ListView):
             favoritos_ids = list(favoritos.values_list('producto_id', flat=True))
             context['favoritos_ids'] = favoritos_ids
         return context
+    
+    def get_queryset(self):
+        return Producto.objects.all().order_by('nombre')
 
 class CrearProducto(LoginRequiredMixin, CreateView):
     template_name = "productos/nuevoProducto.html"
@@ -72,4 +75,8 @@ class ListarFavoritos(LoginRequiredMixin, ListView):
         context['es_favorito'] = True  # Ejemplo de cómo puedes agregar más datos al contexto
         return context
 
-
+class EliminarProducto(View):
+    def post(self, request, pk):
+        producto = get_object_or_404(Producto, pk=pk)
+        producto.delete()
+        return redirect('productos:listar')  # Redirecciona a la lista de productos después de eliminar
