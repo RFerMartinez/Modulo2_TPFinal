@@ -18,5 +18,6 @@ urlpatterns = [
     # path('login/', )
 
     path("productos/", include('apps.productos.urls')),
+    path("usuarios/", include('apps.usuarios.urls')),
 ]
 

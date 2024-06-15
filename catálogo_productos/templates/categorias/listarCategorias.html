@@ -1,0 +1,58 @@
+{% extends 'base/base.html' %}
+
+{% block contenido %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">LISTA DE CATEGORIAS</h1>
+    <div class="col-auto">
+        <a class="btn btn-primary" href="#">Crear nueva categoría</a>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Productos asociados</th>
+                    <th scope="col">Fecah de alta</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for c in categorias %}
+                    <tr>
+                        <th scope="row"><p>{{c.nombre}}</p></th>
+                            <td>{{c.productos.count}}</td>
+                            <td>{{c.fecha_creacion}}</td>
+                            <td>
+                                ELIMINAR
+                            </td>
+                            <!-- <td>
+                                {% if u.es_admin %}
+                                    <p><i class="fas fa-check-circle" style="color: green;"></i> Es Admin</p>
+                                {% else %}
+                                    <p><i class="fas fa-times-circle color_x" style="color: red;"></i> No es Admin</p>
+                                {% endif %}
+                            </td> -->
+                    </tr>
+                {% empty %} <!--En el caso de que el for anterior no pueda iterar nada. Se ejecuta lo que esté en el 'empty'-->
+                    <tr>
+                        <td colspan="5">
+                            <h5>NO EXISTE REGISTROS</h5>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        {% include 'base/paginacion.html' %}
+    </div>
+</div>
+
+{% endblock contenido %}

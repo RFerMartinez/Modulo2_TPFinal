@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+
+{% block contenido %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">LISTA DE USUARIOS</h1>
+</div>
+
+<div class="row">
+    <div class="col">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">Nombre de usuario</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecah de alta</th>
+                    <th>Roles</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for u in usuarios %}
+                    <tr>
+                        <th scope="row"><p>{{u.username}}</p></th>
+                            <td>{{u.last_name|upper}}</td>
+                            <td>{{u.first_name|title}}</td>
+                            <td>
+                                {{u.date_joined}}
+                            </td>
+                            <td>
+                                {% if u.es_admin %}
+                                    <p><i class="fas fa-check-circle" style="color: green;"></i> Es Admin</p>
+                                {% else %}
+                                    <p><i class="fas fa-times-circle color_x" style="color: red;"></i> No es Admin</p>
+                                {% endif %}
+                            </td>
+                    </tr>
+                {% empty %} <!--En el caso de que el for anterior no pueda iterar nada. Se ejecuta lo que esté en el 'empty'-->
+                    <tr>
+                        <td colspan="5">
+                            <h5>NO EXISTE REGISTROS</h5>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        {% include 'base/paginacion.html' %}
+    </div>
+</div>
+
+{% endblock contenido %}
