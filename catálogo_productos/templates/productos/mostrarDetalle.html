@@ -59,39 +59,41 @@
         </div>
     </div>
 
-{% endblock contenido %}
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-        $('.toggle-favorito').click(function (e) {
-            e.preventDefault();
-            var $el = $(this);
-            var producto_id = $el.data('producto-id');
-            var url = '{% url "productos:toggle-favorito" 0 %}'.replace('0', producto_id);
-
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {
-                    'csrfmiddlewaretoken': '{{ csrf_token }}'
-                },
-                success: function (data) {
-                    if (data.favorito) {
-                        // Si el producto es marcado como favorito
-                        $el.removeClass('favorito-outline').addClass('favorito-fill');
-                        $el.find('i').removeClass('far fa-heart').addClass('fas fa-heart');
-                    } else {
-                        // Si el producto es removido de los favoritos
-                        $el.removeClass('favorito-fill').addClass('favorito-outline');
-                        $el.find('i').removeClass('fas fa-heart').addClass('far fa-heart');
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            $('.toggle-favorito').click(function (e) {
+                e.preventDefault();
+                var $el = $(this);
+                var producto_id = $el.data('producto-id');
+                var url = '{% url "productos:toggle-favorito" 0 %}'.replace('0', producto_id);
+    
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        if (data.favorito) {
+                            // Si el producto es marcado como favorito
+                            $el.removeClass('favorito-outline').addClass('favorito-fill');
+                            $el.find('i').removeClass('far fa-heart').addClass('fas fa-heart');
+                        } else {
+                            // Si el producto es removido de los favoritos
+                            $el.removeClass('favorito-fill').addClass('favorito-outline');
+                            $el.find('i').removeClass('fas fa-heart').addClass('far fa-heart');
+                        }
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
                     }
-                },
-                error: function (data) {
-                    console.log('Error:', data);
-                }
+                });
             });
         });
-    });
-</script>
+    </script>
+
+    
+{% endblock contenido %}

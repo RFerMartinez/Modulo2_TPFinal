@@ -153,6 +153,9 @@
     $(document).ready(function () {
         $('.toggle-favorito').click(function (e) {
             e.preventDefault();
+
+            console.log('Clic en el ícono de favorito');
+
             var $el = $(this);
             var producto_id = $el.data('producto-id');
             var url = '{% url "productos:toggle-favorito" 0 %}'.replace('0', producto_id);
