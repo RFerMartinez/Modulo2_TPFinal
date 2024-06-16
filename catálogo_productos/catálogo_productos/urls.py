@@ -15,6 +15,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('registrar/', views.registrar, name='registrar'),
+    path('editar-perfil/', views.editar_perfil, name='editar_perfil'),
 
     # --LOGIN--
     # path('login/', )

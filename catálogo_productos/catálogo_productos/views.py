@@ -2,9 +2,11 @@ from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 from django import forms
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
-from apps.usuarios.forms import FormularioRegistroUsuario
+from apps.usuarios.forms import FormularioRegistroUsuario, FormularioEditarPerfil, FormularioCambiarContraseña
 
 def home(request):
     template="home.html"
@@ -105,3 +107,29 @@ def registrar(request):
         'mensajeCorrecto': mensaje,
     }
     return render(request=request, template_name=template_name, context=ctx)
+
+@login_required
+def editar_perfil(request):
+    if request.method == 'POST':
+        form_perfil = FormularioEditarPerfil(request.POST, request.FILES, instance=request.user)
+        form_password = FormularioCambiarContraseña(request.user, request.POST)
+        
+        if form_perfil.is_valid():
+            form_perfil.save()
+            messages.success(request, 'Tu perfil ha sido actualizado con éxito.')
+            return redirect('editar_perfil')
+        
+        if form_password.is_valid():
+            user = form_password.save()
+            update_session_auth_hash(request, user)  # Mantener la sesión después de cambiar la contraseña
+            messages.success(request, 'Tu contraseña ha sido cambiada con éxito.')
+            return redirect('editar_perfil')
+    else:
+        form_perfil = FormularioEditarPerfil(instance=request.user)
+        form_password = FormularioCambiarContraseña(request.user)
+
+    context = {
+        'form_perfil': form_perfil,
+        'form_password': form_password
+    }
+    return render(request, 'usuarios/editarPerfil.html', context)

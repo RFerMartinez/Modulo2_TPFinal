@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 
 from .models import Usuario
 
@@ -53,3 +53,43 @@ class FormularioRegistroUsuario(UserCreationForm):
         self.fields['email'].widget.attrs['placeholder'] = 'Correo electrónico'
         self.fields['password1'].widget.attrs['placeholder'] = 'Contraseña'
         self.fields['password2'].widget.attrs['placeholder'] = 'Repite la contraseña'
+
+class FormularioEditarPerfil(UserChangeForm):
+    password = None  # Excluir el campo de la contraseña del formulario principal
+
+    class Meta:
+        model = Usuario
+        fields = ['first_name', 'last_name', 'email', 'imagen']  # Puedes incluir otros campos si lo necesitas
+
+    def __init__(self, *args, **kwargs):
+        super(FormularioEditarPerfil, self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs['class'] = 'form-control'
+        self.fields['last_name'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['imagen'].widget.attrs['class'] = 'form-control'
+
+class FormularioCambiarContraseña(PasswordChangeForm):
+    old_password = forms.CharField(
+        label="Contraseña actual",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+        })
+    )
+    new_password1 = forms.CharField(
+        label="Nueva contraseña",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+        })
+    )
+    new_password2 = forms.CharField(
+        label="Confirmar nueva contraseña",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+        })
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(FormularioCambiarContraseña, self).__init__(*args, **kwargs)
+        self.fields['old_password'].widget.attrs['placeholder'] = 'Contraseña actual'
+        self.fields['new_password1'].widget.attrs['placeholder'] = 'Nueva contraseña'
+        self.fields['new_password2'].widget.attrs['placeholder'] = 'Confirma nueva contraseña'
