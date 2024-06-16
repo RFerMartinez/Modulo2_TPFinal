@@ -92,7 +92,7 @@ def registrar(request):
     mensaje = None
 
     if request.method == 'POST':
-        form = FormularioRegistroUsuario(request.POST)
+        form = FormularioRegistroUsuario(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()

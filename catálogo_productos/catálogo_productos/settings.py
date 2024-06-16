@@ -125,8 +125,13 @@ RUTA_CARPETA_STATIC = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = [
     RUTA_CARPETA_STATIC,
 ]
+# Configuración para poder añadir imágenes
+RUTA_CARPETA_MEDIA = os.path.join(BASE_DIR, "media")
+MEDIA_URL="/media/"
+MEDIA_ROOT = RUTA_CARPETA_MEDIA
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

@@ -2,6 +2,8 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as views_django
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 from . import views
@@ -20,5 +22,5 @@ urlpatterns = [
     path("productos/", include('apps.productos.urls')),
     path("usuarios/", include('apps.usuarios.urls')),
     path("categorias/", include('apps.categorias.urls')),
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

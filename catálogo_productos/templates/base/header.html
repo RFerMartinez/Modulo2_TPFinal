@@ -38,16 +38,21 @@
                     <!--IMÁGEN DE PERFIL-->
                     <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{% static 'image/icon_user.jpg' %}" alt="mdo" width="32" height="32" class="rounded-circle">
+                        {% if user.imagen %}
+                            <img src="{{user.imagen.url}}" alt="mdo" width="32" height="32" class="rounded-circle">
+                        {% else %}
+                            <img src="{% static 'image/icon_user.jpg' %}" alt="mdo" width="32" height="32" class="rounded-circle">
+                        {% endif %}
+                        {{user}}
                     </a>
     
                     <!--MENÚ DESPLEGABLE-->
                     <ul class="dropdown-menu dropdown-menu-end text-small">
                         <!-- <li><a class="dropdown-item" href="#">New project...</a></li> -->
-                        <p class="dropdown-item"><strong>{{user}}</strong></p>
-                        <li>
-                            <hr class="dropdown-divider"> <!--LINA DE SEPARACIÓN-->
-                        </li>
+                        <!-- <p class="dropdown-item"><strong>{{user}}</strong></p> -->
+                        <!-- <li>
+                            <hr class="dropdown-divider">
+                        </li> -->
                         <li><a class="dropdown-item" href="{% url 'productos:lista_favorito' %}">Lista de Favoritos</a></li>
                         <li><a class="dropdown-item" href="{% url 'usuarios:mostrar_perfil' %}">Perfil</a></li>
                         <li><a class="dropdown-item" href="#">Editar datos personales</a></li>

@@ -32,10 +32,16 @@ class FormularioRegistroUsuario(UserCreationForm):
             'class': 'form-control',
         })
     )
+    imagen = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(attrs={
+            'class': 'form-control1',
+        })
+    )
 
     class Meta:
         model = Usuario
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'imagen', 'email']
 
     def __init__(self, *args, **kwargs):
         super(FormularioRegistroUsuario, self).__init__(*args, *kwargs)
