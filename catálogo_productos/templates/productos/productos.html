@@ -37,7 +37,7 @@
                                 <p class="card-text text-truncate-3">{{ p.nombre }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a class="btn btn-sm btn-outline-secondary" href="#">Ver detalles</a>
+                                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'productos:mostrar_detalle' p.pk %}">Ver detalles</a>
                                         {% if user.is_authenticated and user.es_admin %}
                                             <a class="btn btn-sm btn-outline-secondary" href="{% url 'productos:editar' p.pk %}">Editar</a>
                                         {% endif %}

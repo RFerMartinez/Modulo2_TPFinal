@@ -1,0 +1,47 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+    <!-- <hr class="featurette-divider"> -->
+    <div class="row featurette">
+        <h2 class="featurette-heading fw-normal lh-1">DETALLE</h2>
+
+        <hr class="featurette-divider my-5 border-3 border-dark">
+
+        <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1" style="margin-bottom: 20px;">{{productos.nombre}}</h2>
+
+            <hr class="featurette-divider my-2 border-3 border-dark">
+            
+            <p class="text-dark font-weight-bold" style="font-size: 20px;"><i class="fas fa-bookmark"></i> Categoría</p>
+            <p style="margin-left: 20px;">{{productos.categoria.nombre}}</p>
+
+            <hr class="featurette-divider my-1 border-3 border-dark">
+
+            <p class="text-dark font-weight-bold" style="font-size: 20px;"><i class="fas fa-file-alt"></i> Descripción</p>
+            <p style="margin-left: 20px;">{{productos.descripcion}}</p>
+
+            <hr class="featurette-divider my-1 border-3 border-dark">
+
+            <p class="text-dark font-weight-bold" style="font-size: 20px;"><i class="fas fa-dollar-sign"></i> Precio</p>
+            <p style="margin-left: 20px;">$ {{productos.precio}}</p>
+
+            <hr class="featurette-divider my-1 border-3 border-dark">
+
+        </div>
+        <div class="col-md-5">
+            {% if productos.imagen %}
+                <div class="border rounded">
+                    <img class="img-fluid" height="300px" src="{{ productos.imagen.url }}" alt="Producto">
+                </div>
+            {% else %}
+                <div class="border rounded">
+                    <img class="img-fluid" height="300px" src="{% static 'image/producto_default.jpg' %}" alt="Producto">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock contenido %}

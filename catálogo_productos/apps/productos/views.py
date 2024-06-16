@@ -4,6 +4,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
+from django.contrib.auth.decorators import login_required
 
 from .models import Producto, Favorito
 from .forms import ProductoForm
@@ -107,3 +108,11 @@ class ListarProductosAdmin(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Producto.objects.all().order_by('nombre')
+
+def mostrarDetalles(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+
+    context = {
+        'productos': producto
+    }
+    return render(request, 'productos/mostrarDetalle.html', context)
