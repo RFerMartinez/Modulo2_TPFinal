@@ -1,1 +1,38 @@
 Version de python: 3.11.3
+
+AGEGAR UNA IMÁGEN
+
+campo a agregar en el model.py
+    logo = models.FileField
+    logo = models.ImageField(null=True, blank=True, upload_to="materias_logo") <-- se trabaja con esto ya que se necestia algo en particular, una lib Pillow
+
+Instalar la libreria Pillow
+
+Ejecutar makemigrations, migrate
+
+Las imágenes se van a guardar en un direcotrio, hay que establecerle al proyecto, en éste caso /media
+Para destinar una carpeta se lo hace en el seting.py
+RUTA_CARPETA_MEDIA = os.path.join(BASE_DIR, "media")
+MEDIA_URL="media/"
+MEDIA_ROOT = RUTA_CARPETA_MEDIA
+
+DEFINIR EN LOS PATRONES GENERALES DE URLS.PY
+from django.conf import settings
+from django.conf.urls.static import static
+urlpatterns = [
+    ...
+]+static(settings.MEDIA_URL, document_root=settins.MEDIA_ROOT)
+
+
+En el form method=POST --> enctype="miltipart/form-data"
+
+MOSTRAR LA imágen
+
+si yo hago {{producto.logo}} --> se me va a mostrar la url a al archivo de la imágen
+entonces se hace lo siguiente
+<img src="{{producto.logo}}"> (Pero aun se sigue sin poder ver la imñagen)
+{% if producto.logo %}
+<img src="{{producto.logo.url}}">
+{% endif %}
+
+min 43
