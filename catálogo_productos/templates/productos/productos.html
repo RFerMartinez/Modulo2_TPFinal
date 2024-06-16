@@ -1,5 +1,7 @@
 {% extends 'base/base.html' %}
 
+{% load static %}
+
 {% block contenido %}
 <div class="row align-items-center">
     <div class="col">
@@ -24,15 +26,15 @@
                 {% if p.es_activo %}
                     <div class="col">
                         <div class="card shadow-sm position-relative fixed-height-card">
-                            <!--IMAGEN-->
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>{{ p.nombre }}</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ p.nombre }}</text>
-                            </svg>
                             
+                            {% if p.imagen %}
+                                <img class="card-img" src="{{p.imagen.url}}">
+                            {% else %}
+                                <img class="card-img" src="{% static 'image/producto_default.jpg' %}">
+                            {% endif %}
+
                             <div class="card-body">
-                                <p class="card-text text-truncate-3">{{ p.descripcion }}</p>
+                                <p class="card-text text-truncate-3">{{ p.nombre }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a class="btn btn-sm btn-outline-secondary" href="#">Ver detalles</a>
@@ -46,26 +48,23 @@
                                             <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Estás seguro de eliminar este producto?')">Eliminar</button>
                                         </form>
                                     {% endif %}
-                                    <!--ICONO DE FAVORITOS-->
+                                    <!-- ICONO DE FAVORITOS -->
                                     <span class="position-absolute top-0 end-0 p-3">
                                         {% if user.is_authenticated %}
                                             {% if p.id in favoritos_ids %}
-                                                <a href="#" class="toggle-favorito text-danger" data-producto-id="{{ p.id }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                                                        <path d="M8 1.314C7.403-.165 4.143-2.022 1.748 1.1-1.797 5.402 8 13.812 8 13.812s9.797-8.41 6.252-12.712C11.857-2.022 8.597-.165 8 1.314z"/>
-                                                    </svg>
+                                                <!-- Icono de corazón lleno con contorno negro -->
+                                                <a href="#" class="toggle-favorito favorito-fill" data-producto-id="{{ p.id }}">
+                                                    <i class="fas fa-heart fa-lg"></i>
                                                 </a>
                                             {% else %}
-                                                <a href="#" class="toggle-favorito text-white" data-producto-id="{{ p.id }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                                        <path d="M8 2.748-.717-6.452A5.995 5.995 0 0 1 8-1c1.36 0 2.628.686 3.328 1.748C12.629 3.314 13 4.73 13 6.25c0 1.72-.6 2.995-1.71 4.34C10.024 11.542 8.68 12.74 8 13.944c-.68-1.204-2.025-2.402-3.29-3.354C3.6 9.245 3 7.97 3 6.25c0-1.52.37-2.936 1.378-4.502A3.964 3.964 0 0 1 8 2.748z"/>
-                                                        <path d="M8 15C-7.333 4.868 3.279-3.04 7.824 1.143a1.717 1.717 0 0 1 .352.481.856.856 0 0 1 .352-.481C12.721-3.042 23.333 4.868 8 15z"/>
-                                                    </svg>
+                                                <!-- Icono de corazón vacío con contorno negro -->
+                                                <a href="#" class="toggle-favorito favorito-outline" data-producto-id="{{ p.id }}">
+                                                    <i class="far fa-heart fa-lg"></i>
                                                 </a>
                                             {% endif %}
                                         {% endif %}
                                     </span>
-                                    <!--FIN ICONO DE FAVORITOS-->
+                                    <!-- FIN ICONO DE FAVORITOS -->
                                 </div>
                             </div>
                         </div>
@@ -84,12 +83,11 @@
 </div>
 
 <style>
-    .fixed-height-card {
-    height: 400px; /* Ajusta esta altura según tus necesidades */
+.fixed-height-card {
+    height: 350px; /* Ajusta esta altura según tus necesidades */
     display: flex;
     flex-direction: column;
 }
-
 /* Limitar la altura del cuerpo de la carta */
 .fixed-height-card .card-body {
     flex: 1;
@@ -97,7 +95,6 @@
     flex-direction: column;
     justify-content: space-between;
 }
-
 /* Truncar el texto después de 3 líneas con puntos suspensivos */
 .text-truncate-3 {
     display: -webkit-box;
@@ -106,14 +103,48 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 /* Asegurarse de que la imagen SVG no influya en la altura de la carta */
 .fixed-height-card svg {
     flex-shrink: 0;
 }
-
 .text-white {
     color: white !important;
+}
+.favorito-fill i {
+    color: red;
+    text-shadow: 0px 0px 2px black; /* Añade un ligero contorno negro */
+}
+
+.favorito-outline i {
+    color: white; /* Rellena en blanco */
+    text-shadow: 0px 0px 2px red; /* Contorno rojo */
+}
+
+.favorito-outline i:hover {
+    color: red; /* Cambia a rojo cuando está en hover */
+}
+
+.favorito-outline i::before {
+    content: "\f004"; /* Código del icono de Font Awesome de corazón */
+    color: red; /* Cambia el contorno a rojo */
+    display: inline-block;
+    -webkit-text-stroke: 1px red; /* Contorno de 1px rojo */
+    -webkit-text-fill-color: white; /* Relleno blanco */
+}
+
+/* Asegurando que la imagen tenga una altura fija y mantenga su proporción */
+.card-img {
+    height: 225px;   /* Altura fija del contenedor */
+    width: 100%;     /* Ancho ajustado al contenedor */
+    object-fit: contain; /* Ajusta la imagen para que quepa completamente dentro del contenedor sin recortar */
+    object-position: center; /* Centra la imagen dentro del contenedor */
+    background-color: #f8f9fa; /* Color de fondo opcional para el espacio vacío */
+}
+
+/* Ajuste adicional para el contenedor de la imagen dentro de la tarjeta */
+.fixed-height-card {
+    position: relative;
+    overflow: hidden; /* Asegura que cualquier parte de la imagen fuera del contenedor se oculte */
 }
 </style>
 
@@ -136,12 +167,12 @@
                 success: function (data) {
                     if (data.favorito) {
                         // Si el producto es marcado como favorito
-                        $el.removeClass('text-white').addClass('text-danger');
-                        $el.find('svg').removeClass('bi-heart').addClass('bi-heart-fill');
+                        $el.removeClass('favorito-outline').addClass('favorito-fill');
+                        $el.find('i').removeClass('far fa-heart').addClass('fas fa-heart');
                     } else {
                         // Si el producto es removido de los favoritos
-                        $el.removeClass('text-danger').addClass('text-white');
-                        $el.find('svg').removeClass('bi-heart-fill').addClass('bi-heart');
+                        $el.removeClass('favorito-fill').addClass('favorito-outline');
+                        $el.find('i').removeClass('fas fa-heart').addClass('far fa-heart');
                     }
                 },
                 error: function (data) {
@@ -151,6 +182,7 @@
         });
     });
 </script>
+
 
 {% endblock contenido %}
 

@@ -93,3 +93,4 @@ class FormularioCambiarContraseña(PasswordChangeForm):
         self.fields['old_password'].widget.attrs['placeholder'] = 'Contraseña actual'
         self.fields['new_password1'].widget.attrs['placeholder'] = 'Nueva contraseña'
         self.fields['new_password2'].widget.attrs['placeholder'] = 'Confirma nueva contraseña'
+        
