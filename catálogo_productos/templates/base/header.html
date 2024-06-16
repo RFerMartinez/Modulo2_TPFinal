@@ -4,15 +4,6 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
-            <!--LOGO DE PÁGINA - LINK: HOME-->
-            <!--
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
-            </a>
-            -->
-
             <!--BARRA NAVEGACIón-->
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{% url 'home' %}" class="nav-link px-2 link-secondary a-nav">INICIO</a></li>
@@ -20,8 +11,9 @@
             </ul>
 
             <!--TEXTBOX DE BÚSQUEDA-->
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
+            <form id="form-busqueda" action="{% url 'productos:buscar_productos' %}" method="GET" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                <input name="query" type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
+                <button type="submit" class="btn btn-primary">Buscar</button>
             </form>
 
             <div class="col-md-3 text-end">
@@ -48,11 +40,6 @@
     
                     <!--MENÚ DESPLEGABLE-->
                     <ul class="dropdown-menu dropdown-menu-end text-small">
-                        <!-- <li><a class="dropdown-item" href="#">New project...</a></li> -->
-                        <!-- <p class="dropdown-item"><strong>{{user}}</strong></p> -->
-                        <!-- <li>
-                            <hr class="dropdown-divider">
-                        </li> -->
                         <li><a class="dropdown-item" href="{% url 'productos:lista_favorito' %}">Lista de Favoritos</a></li>
                         <li><a class="dropdown-item" href="{% url 'usuarios:mostrar_perfil' %}">Perfil</a></li>
                         <li><a class="dropdown-item" href="{% url 'editar_perfil' %}">Editar datos personales</a></li>

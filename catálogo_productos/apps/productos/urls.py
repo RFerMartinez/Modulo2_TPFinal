@@ -21,5 +21,7 @@ urlpatterns = [
     path('toggle-favorito/<int:producto_id>/', views.toggle_favorito, name='toggle-favorito'),
 
     path('detalles/<int:pk>/', views.mostrarDetalles, name='mostrar_detalle'),
+
+    path('buscar/', views.buscarProductos, name='buscar_productos'),
 ]
 

@@ -1,0 +1,190 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+<div class="row align-items-center">
+    <div class="col">
+        <h1>PRODUCTOS</h1>
+    </div>
+    {% if user.is_authenticated and user.es_admin %}
+    <div class="col-auto">
+        <a class="btn btn-primary" href="{% url 'productos:crear_producto' %}">Crear nuevo producto</a>
+        <a class="btn btn-primary" href="{% url 'categorias:crear_categoria' %}">Crear nueva categoría</a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Lista de productos -->
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <!-- Paginación anterior -->
+        {% include 'base/paginacion.html' %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <!-- CARDS (Productos)-->
+            {% for p in resultados %}
+                {% if p.es_activo %}
+                    <div class="col">
+                        <div class="card shadow-sm position-relative fixed-height-card">
+                            
+                            {% if p.imagen %}
+                                <img class="card-img" src="{{p.imagen.url}}">
+                            {% else %}
+                                <img class="card-img" src="{% static 'image/producto_default.jpg' %}">
+                            {% endif %}
+
+                            <div class="card-body">
+                                <p class="card-text text-truncate-3">{{ p.nombre }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'productos:mostrar_detalle' p.pk %}">Ver detalles</a>
+                                        {% if user.is_authenticated and user.es_admin %}
+                                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'productos:editar' p.pk %}">Editar</a>
+                                        {% endif %}
+                                    </div>
+                                    {% if user.is_authenticated and user.es_admin %}
+                                        <form action="{% url 'productos:eliminar' p.pk %}" method="post" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Estás seguro de eliminar este producto?')">Eliminar</button>
+                                        </form>
+                                    {% endif %}
+                                    <!-- ICONO DE FAVORITOS -->
+                                    <span class="position-absolute top-0 end-0 p-3">
+                                        {% if user.is_authenticated %}
+                                            {% if p.id in favoritos_ids %}
+                                                <!-- Icono de corazón lleno con contorno negro -->
+                                                <a href="#" class="toggle-favorito favorito-fill" data-producto-id="{{ p.id }}">
+                                                    <i class="fas fa-heart fa-lg"></i>
+                                                </a>
+                                            {% else %}
+                                                <!-- Icono de corazón vacío con contorno negro -->
+                                                <a href="#" class="toggle-favorito favorito-outline" data-producto-id="{{ p.id }}">
+                                                    <i class="far fa-heart fa-lg"></i>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </span>
+                                    <!-- FIN ICONO DE FAVORITOS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <!--Fin CARDS (productos)-->
+        </div>
+        
+        <!-- Paginación siguiente -->
+        <div class="mt-5">
+            {% include 'base/paginacion.html' %}
+        </div>
+    </div>
+</div>
+
+<style>
+.fixed-height-card {
+    height: 350px; /* Ajusta esta altura según tus necesidades */
+    display: flex;
+    flex-direction: column;
+}
+/* Limitar la altura del cuerpo de la carta */
+.fixed-height-card .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* Truncar el texto después de 3 líneas con puntos suspensivos */
+.text-truncate-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Número de líneas después de las cuales se truncará el texto */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* Asegurarse de que la imagen SVG no influya en la altura de la carta */
+.fixed-height-card svg {
+    flex-shrink: 0;
+}
+.text-white {
+    color: white !important;
+}
+.favorito-fill i {
+    color: red;
+    text-shadow: 0px 0px 2px black; /* Añade un ligero contorno negro */
+}
+
+.favorito-outline i {
+    color: white; /* Rellena en blanco */
+    text-shadow: 0px 0px 2px red; /* Contorno rojo */
+}
+
+.favorito-outline i:hover {
+    color: red; /* Cambia a rojo cuando está en hover */
+}
+
+.favorito-outline i::before {
+    content: "\f004"; /* Código del icono de Font Awesome de corazón */
+    color: red; /* Cambia el contorno a rojo */
+    display: inline-block;
+    -webkit-text-stroke: 1px red; /* Contorno de 1px rojo */
+    -webkit-text-fill-color: white; /* Relleno blanco */
+}
+
+/* Asegurando que la imagen tenga una altura fija y mantenga su proporción */
+.card-img {
+    height: 225px;   /* Altura fija del contenedor */
+    width: 100%;     /* Ancho ajustado al contenedor */
+    object-fit: contain; /* Ajusta la imagen para que quepa completamente dentro del contenedor sin recortar */
+    object-position: center; /* Centra la imagen dentro del contenedor */
+    background-color: #f8f9fa; /* Color de fondo opcional para el espacio vacío */
+}
+
+/* Ajuste adicional para el contenedor de la imagen dentro de la tarjeta */
+.fixed-height-card {
+    position: relative;
+    overflow: hidden; /* Asegura que cualquier parte de la imagen fuera del contenedor se oculte */
+}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.toggle-favorito').click(function (e) {
+            e.preventDefault();
+
+            console.log('Clic en el ícono de favorito');
+
+            var $el = $(this);
+            var producto_id = $el.data('producto-id');
+            var url = '{% url "productos:toggle-favorito" 0 %}'.replace('0', producto_id);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    if (data.favorito) {
+                        // Si el producto es marcado como favorito
+                        $el.removeClass('favorito-outline').addClass('favorito-fill');
+                        $el.find('i').removeClass('far fa-heart').addClass('fas fa-heart');
+                    } else {
+                        // Si el producto es removido de los favoritos
+                        $el.removeClass('favorito-fill').addClass('favorito-outline');
+                        $el.find('i').removeClass('fas fa-heart').addClass('far fa-heart');
+                    }
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        });
+    });
+</script>
+
+
+{% endblock contenido %}
+

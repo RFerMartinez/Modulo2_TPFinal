@@ -124,3 +124,18 @@ def mostrarDetalles(request, pk):
         'favoritos_ids': favoritos_ids,
     }
     return render(request, 'productos/mostrarDetalle.html', context)
+
+def buscarProductos(request):
+    query = request.GET.get('query')
+
+    if query:
+        # Realizar la búsqueda en base al campo 'nombre' del modelo Producto
+        resultados = Producto.objects.filter(nombre__icontains=query)
+        context = {
+            'query': query,
+            'resultados': resultados
+        }
+        return render(request, 'productos/buscarProductos.html', context)
+    else:
+        # Si no hay consulta válida, redirigir a la página que lista todos los productos
+        return redirect('productos:listar')  # Ajusta 'productos:listar' con la URL de tu vista que lista todos los productos
