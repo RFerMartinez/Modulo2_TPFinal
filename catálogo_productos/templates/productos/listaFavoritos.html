@@ -28,7 +28,7 @@
                             </td>
                             <td>
                                 <a href="#" class="btn btn-primary btn-sm disabled">Eliminar</a>
-                                <a href="#" class="btn btn-primary btn-sm disabled">Ver detalle</a>
+                                <a href="{% url 'productos:mostrar_detalle' p.pk %}" class="btn btn-primary btn-sm">Ver detalle</a>
                             </td>
                     </tr>
                 {% endfor %}

@@ -11,7 +11,22 @@
         <hr class="featurette-divider my-5 border-3 border-dark">
 
         <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1" style="margin-bottom: 20px;">{{productos.nombre}}</h2>
+            <h2 class="featurette-heading fw-normal lh-1" style="margin-bottom: 20px;">
+                {{productos.nombre}}
+                {% if user.is_authenticated %}
+                    {% if productos.id in favoritos_ids %}
+                        <!-- Icono de corazón lleno con contorno negro -->
+                        <a href="#" class="toggle-favorito favorito-fill" data-producto-id="{{ productos.id }}">
+                            <i class="fas fa-heart fa-lg"></i>
+                        </a>
+                    {% else %}
+                        <!-- Icono de corazón vacío con contorno negro -->
+                        <a href="#" class="toggle-favorito favorito-outline" data-producto-id="{{ productos.id }}">
+                            <i class="far fa-heart fa-lg"></i>
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </h2>
 
             <hr class="featurette-divider my-2 border-3 border-dark">
             
@@ -45,3 +60,38 @@
     </div>
 
 {% endblock contenido %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.toggle-favorito').click(function (e) {
+            e.preventDefault();
+            var $el = $(this);
+            var producto_id = $el.data('producto-id');
+            var url = '{% url "productos:toggle-favorito" 0 %}'.replace('0', producto_id);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    if (data.favorito) {
+                        // Si el producto es marcado como favorito
+                        $el.removeClass('favorito-outline').addClass('favorito-fill');
+                        $el.find('i').removeClass('far fa-heart').addClass('fas fa-heart');
+                    } else {
+                        // Si el producto es removido de los favoritos
+                        $el.removeClass('favorito-fill').addClass('favorito-outline');
+                        $el.find('i').removeClass('fas fa-heart').addClass('far fa-heart');
+                    }
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        });
+    });
+</script>
