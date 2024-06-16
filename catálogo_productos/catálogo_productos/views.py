@@ -1,9 +1,8 @@
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 from django import forms
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
-from django.template.loader import render_to_string
 
 from apps.usuarios.forms import FormularioRegistroUsuario
 

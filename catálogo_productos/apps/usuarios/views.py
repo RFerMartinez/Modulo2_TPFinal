@@ -1,5 +1,6 @@
 from django.views.generic.list import ListView
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from .models import Usuario
 from ..productos.models import Categoria
@@ -36,3 +37,12 @@ class ListarCategorias(ListView):
     
     def get_queryset(self):
         return self.model.objects.all().order_by("pk")
+
+@login_required
+def mostrarPerfil(request):
+    template_name = 'usuarios/mostrarPerfil.html'
+    ctx = {
+        'usuario': request.user
+    }
+    return render(request=request, template_name=template_name, context=ctx)
+

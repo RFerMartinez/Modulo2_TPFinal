@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+
+{% block contenido %}
+
+    <!-- <hr class="featurette-divider"> -->
+    <div class="row featurette">
+        <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1" style="margin-bottom: 20px;">{{usuario.last_name}}, {{usuario.first_name}}<span class="text-body-secondary"> ({{usuario.username}}) </span></h2>
+
+            <hr class="featurette-divider my-2 border-3 border-dark">
+            
+            <p class="text-dark font-weight-bold" style="font-size: 20px;"><i class="fas fa-envelope"></i> Correo electrónico</p>
+            <p style="margin-left: 20px;">{{usuario.email}}</p>
+            <hr class="featurette-divider my-1 border-3 border-dark">
+
+            <p class="text-dark font-weight-bold" style="font-size: 20px;"><i class="fas fa-sign-in-alt"></i> Fecha de alta</p>
+            <p style="margin-left: 20px;">{{usuario.date_joined}}</p>
+            <hr class="featurette-divider my-1 border-3 border-dark">
+
+        </div>
+        <div class="col-md-5">
+            <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="300"
+                height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
+                preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect><text x="50%" y="50%"
+                    fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
+            </svg>
+        </div>
+    </div>
+
+{% endblock contenido %}
